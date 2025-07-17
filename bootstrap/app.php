@@ -27,6 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(append: [
             EnsureFrontendRequestsAreStateful::class,
         ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
