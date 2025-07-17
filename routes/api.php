@@ -9,10 +9,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/events', [EventController::class, 'index']); // get all events 
 Route::get('/events/{event}', [EventController::class, 'show']); // get event detial
-Route::post('/events/{event}/register', [ParticipantController::class, 'registerEvent']); // register to event
+Route::post('/events/{event}/register', [ParticipantController::class, 'getRegisteredEvents']); // register to event
 Route::get('/categories', [CategoryController::class, 'index']); // get all categories
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user/registered-events', [ParticipantController::class, 'getEventParticipants']);
+    Route::get('/organizer/latest-participants', [ParticipantController::class, 'getLatestParticipantsForOrganizer']);
+
+    Route::get('/admin/dashboard-stats', [UserController::class, 'getAdminDashboardStats']);
+
     Route::post('/auth/logout', [EventController::class, 'logout']);
     // Route::get('/user', [AuthController::class, 'user']); // get current logged user
 

@@ -53,6 +53,21 @@ class ParticipantController extends Controller
         ], 201);
     }
 
+    public function getRegisteredEvents(Request $request)
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $registeredEvents = Participant::where('user_id', $user->id)
+            ->with('event.category', 'event.organizer')
+            ->get();
+
+        return response()->json($registeredEvents);
+    }
+
     // view events participant
     // GET /api/events/{event_id}/participants
     public function getEventParticipants(Request $request, Event $event)
@@ -62,6 +77,25 @@ class ParticipantController extends Controller
         }
 
         return response()->json($event->partivipants()->with('user')->get());
+    }
+
+    public function getLatestParticipantsForOrganizer(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->role !== 'event_organizer') {
+            return response()->json(['message' => 'Unauthorized. Only Event Organizers can access this.'], 403);
+        }
+
+        $organizerEventIds = $user->events()->pluck('id');
+
+        $latestParticipants = Participant::whereIn('event_id', $organizerEventIds)
+            ->with('event')
+            ->orderByDesc('created_at')
+            ->limit(5) // Ambil 5 peserta terbaru
+            ->get();
+
+        return response()->json($latestParticipants);
     }
 
     // view all user

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Event;
+use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class UserController extends Controller
 {
+    use AuthorizesRequests;
 
     // viwe EO (Admin)
     // GET /api/organizers
@@ -68,5 +72,22 @@ class UserController extends Controller
 
         $user->token()->delete();
         $user->delete();
+    }
+
+    public function getAdminDashboardStats(Request $request)
+    {
+        $this->authorize('viewAny', User::class); // Re-use viewAny policy for user/admin
+
+        $totalEvents = Event::count();
+        $activeEvents = Event::where('end_time', '>', now())->count();
+        $totalParticipants = Participant::count();
+        $totalOrganizers = User::where('role', 'event_organizer')->count();
+
+        return response()->json([
+            'total_events_created' => $totalEvents,
+            'active_events' => $activeEvents,
+            'total_participants_registered' => $totalParticipants,
+            'total_organizers_registered' => $totalOrganizers,
+        ]);
     }
 }
