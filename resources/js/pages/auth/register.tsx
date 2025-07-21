@@ -14,6 +14,7 @@ type RegisterForm = {
     email: string;
     password: string;
     password_confirmation: string;
+    role: string;
 };
 
 export default function Register() {
@@ -22,6 +23,7 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        role: 'participant',
     });
 
     const submit: FormEventHandler = (e) => {
@@ -36,6 +38,16 @@ export default function Register() {
             <Head title="Register" />
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
+                    <div className="mb-8">
+                        <img src="images/logo.png" alt="GetEvent Logo" className='h-12 w-auto mx-auto' />
+                        <h2 className='mt-4 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white'>
+                            Create an account
+                        </h2>
+                        <p className='mt-2 text-center text-sm text-gray-600 dark:text-gray-400'>
+                            Enter your detail below to create your account
+                        </p>
+                    </div>
+
                     <div className="grid gap-2">
                         <Label htmlFor="name">Name</Label>
                         <Input
@@ -101,7 +113,7 @@ export default function Register() {
                         <InputError message={errors.password_confirmation} />
                     </div>
 
-                    <Button type="submit" className="mt-2 w-full" tabIndex={5} disabled={processing}>
+                    <Button type="submit" className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-md" tabIndex={5} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Create account
                     </Button>
