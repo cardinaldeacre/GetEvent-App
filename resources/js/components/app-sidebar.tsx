@@ -4,28 +4,53 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { Proportions, Tag, UserCog, BookMarked, UserPen, CalendarRange } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Manage Event',
         href: '/dashboard',
-        icon: LayoutGrid,
+        icon: CalendarRange,
+    },
+    {
+        title: 'Manage Participant',
+        href: '/dashboard',
+        icon: UserPen,
+    },
+    {
+        title: 'Manage Organizer',
+        href: '/dashboard',
+        icon: UserCog,
+    },
+    {
+        title: 'Event Report',
+        href: '/dashboard',
+        icon: Proportions,
+    },
+    {
+        title: 'Manage Category',
+        href: '/dashboard',
+        icon: Tag,
+    },
+    {
+        title: 'Event Report',
+        href: '/dashboard',
+        icon: BookMarked,
     },
 ];
 
 const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
+    // {
+    //     title: 'Repository',
+    //     href: 'https://github.com/laravel/react-starter-kit',
+    //     icon: Folder,
+    // },
+    // {
+    //     title: 'Documentation',
+    //     href: 'https://laravel.com/docs/starter-kits#react',
+    //     icon: BookOpen,
+    // },
 ];
 
 export function AppSidebar() {
